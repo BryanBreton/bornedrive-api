@@ -1,0 +1,93 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "description": "{{PROJECT_DESCRIPTION}}",
+  "version": "0.1.0-0",
+  "bugs": {
+    "url": "{{GithubUrl}}/issues"
+  },
+  "homepage": "{{GithubUrl}}#readme",
+  "repository": {
+    "type": "git",
+    "url": "{{GithubUrl}}"
+  },
+  "files": [
+    "dist",
+    "resources"
+  ],
+  "scripts": {
+    "build": "rm -rf dist/ && ttsc -p tsconfig.build.json",
+    "deps": "bundle-deps",
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "start:dev": "cross-env NODE_ENV=development env-cmd -f .env.developpement node --require ts-node/register --require tsconfig-paths/register src/index.ts",
+    "start:prod": "npm run start",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "test": "jest --collect-coverage",
+    "test:unit": "jest spec/unit --collect-coverage",
+    "test:e2e": "jest spec/e2e --collect-coverage",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml -p {{id-project-extend}}-dev",
+    "docker:dev:up": "npm run docker:dev -- up",
+    "docker:dev:down": "npm run docker:dev -- down",
+    "docker:test": "docker-compose -f docker-compose.test.yml -{{id-project-extend}}-test",
+    "docker:test:up": "npm run docker:test -- up",
+    "docker:test:down": "npm run docker:test -- down",
+    "typeorm:cli": "env-cmd -f .env.developpement ts-node --require tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm:cli:generate-migration": "npm run typeorm:cli -- migration:generate -n Diff"
+  },
+  "author": "U IRIS",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^6.10.12",
+    "@nestjs/core": "^6.10.12",
+    "@nestjs/platform-express": "^6.10.14",
+    "@nestjs/typeorm": "^6.2.0",
+    "@u-iris/feign-ts": "^1.2.2",
+    "@u-iris/iris-back": "^4.1.0",
+    "@u-iris/iris-back-private": "^1.1.2",
+    "@u-iris/iris-common": "^3.1.1",
+    "deepmerge": "^3.3.0",
+    "pg": "^7.11.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.3",
+    "typeorm": "^0.2.22"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^6.2.0",
+    "@types/jest": "^24.0.13",
+    "@types/lodash": "^4.14.136",
+    "@types/node": "^12.7.1",
+    "@types/supertest": "^2.0.7",
+    "@u-iris/iris-common-test-utils": "^3.1.0",
+    "bundle-deps": "^1.0.0",
+    "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
+    "env-cmd": "^9.0.1",
+    "jest": "^24.8.0",
+    "jest-html-reporter": "^2.5.0",
+    "lodash": "^4.17.15",
+    "prettier": "^1.17.1",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.1.0",
+    "tsconfig-paths": "^3.8.0",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "ttypescript": "^1.5.8",
+    "typescript": "^3.7.4",
+    "typescript-transform-paths": "^1.1.13"
+  },
+  "bundledDependencies": [
+    "@nestjs/common",
+    "@nestjs/core",
+    "@nestjs/platform-express",
+    "@nestjs/typeorm",
+    "@u-iris/feign-ts",
+    "@u-iris/iris-back",
+    "@u-iris/iris-back-private",
+    "@u-iris/iris-common",
+    "deepmerge",
+    "pg",
+    "reflect-metadata",
+    "rxjs",
+    "typeorm"
+  ]
+}

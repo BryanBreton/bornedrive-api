@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "outDir": "build/",
+    "moduleResolution": "node",
+    "declaration": false,
+    "sourceMap": true,
+    "target": "es6",
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "@types/node",
+      "@u-iris/iris-common-test-utils/jest.extend",
+      "jest"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "@types"
+    ],
+    "strict": true,
+    "allowJs": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    // Turn to true when iris-back has typings
+    "strictPropertyInitialization": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "noResolve": false,
+    "noUnusedParameters": false,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src/**/*",
+    "spec/**/*",
+    "@types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "coverage",
+    "reports"
+  ]
+}
