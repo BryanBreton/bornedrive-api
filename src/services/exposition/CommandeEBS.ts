@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Post } from "@nestjs/common";
 import { Resource, PathParam } from "@u-iris/iris-back";
 import { CommandeBE } from "~/objects/business/be/CommandeBE";
 import { CommandeLBS } from "../business/CommandeLBS";
@@ -20,7 +20,12 @@ export class CommandeEBS{
                 if(commandes[0].statut === "En cours"){ // si la commande n'est pas finie
                     retour = "Veuillez patientez votre commande n'est pas prête"
                 } else { // si elle est prete
-                    retour = "Votre commande est prete, nous allons vous servir"
+                    if(commandes[0].preparateur){ // si elle est prise en charge par un preparateur
+                        retour = "Votre commande d'un montant de " + commandes[0].montant +" euros est prete, " + commandes[0].preparateur.prenom + " va vous servir"
+                    } else { // si elle n'est pas prise en charge
+                        retour = "Votre commande d'un montant de " + commandes[0].montant +" euros est prete, patientez le temps que l'on vous serve"
+                    }
+                    
                 }
             }
         } else { // numero commande
@@ -38,5 +43,10 @@ export class CommandeEBS{
             }
         }
         return {message: retour}
+    }
+    @Post('/aide')
+    @Resource(CommandeBE)
+    public async Help() {
+        return "aide"
     }
 }

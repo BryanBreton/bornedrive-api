@@ -11,22 +11,27 @@ import { ClientDAO } from './services/data/ClientDAO'
 import { CommandeLBS } from './services/business/CommandeLBS'
 import { CommandeDAO } from './services/data/CommandeDAO'
 import { CommandeBE } from './objects/business/be/CommandeBE'
+import { PreparateurBE } from './objects/business/be/PreparateurBE'
+import { BorneBE } from './objects/business/be/BorneBE'
+import { BorneEBS } from './services/exposition/BorneEBS'
+import { BorneDAO } from './services/data/BorneDAO'
+import { BorneLBS } from './services/business/BorneLBS'
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(getTypeOrmConfiguration()),
     TypeOrmModule.forFeature([
-      ClientBE, CommandeBE
+      ClientBE, CommandeBE, PreparateurBE, BorneBE
       // TODO : ajouter l'ensemble des types BE liés à la base de données
     ]),
     IrisModule.forRoot(irisModuleOptions)
   ],
   controllers: [
-    ClientEBS, CommandeEBS
+    ClientEBS, CommandeEBS, BorneEBS
     // TODO : ajouter l'ensemble des types EBS d'exposition
   ],
   providers: [
-    ClientLBS, ClientDAO, CommandeLBS, CommandeDAO
+    ClientLBS, ClientDAO, CommandeLBS, CommandeDAO, BorneDAO, BorneLBS
     // TODO : ajouter l'ensemble des types beans LBS et DAO pouvant être injectés
   ]
 })
