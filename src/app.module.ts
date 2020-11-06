@@ -16,6 +16,9 @@ import { BorneBE } from './objects/business/be/BorneBE'
 import { BorneEBS } from './services/exposition/BorneEBS'
 import { BorneDAO } from './services/data/BorneDAO'
 import { BorneLBS } from './services/business/BorneLBS'
+import { PreparateurEBS } from './services/exposition/PreparateurEBS'
+import { PreparateurDAO } from './services/data/PreparateurDAO'
+import { PreparateurLBS } from './services/business/PreparateurLBS'
 
 @Module({
   imports: [
@@ -27,11 +30,11 @@ import { BorneLBS } from './services/business/BorneLBS'
     IrisModule.forRoot(irisModuleOptions)
   ],
   controllers: [
-    ClientEBS, CommandeEBS, BorneEBS
+    ClientEBS, CommandeEBS, BorneEBS, PreparateurEBS
     // TODO : ajouter l'ensemble des types EBS d'exposition
   ],
   providers: [
-    ClientLBS, ClientDAO, CommandeLBS, CommandeDAO, BorneDAO, BorneLBS
+    ClientLBS, ClientDAO, CommandeLBS, CommandeDAO, BorneDAO, BorneLBS, PreparateurDAO, PreparateurLBS
     // TODO : ajouter l'ensemble des types beans LBS et DAO pouvant être injectés
   ]
 })
