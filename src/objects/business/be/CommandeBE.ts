@@ -10,11 +10,11 @@ export class CommandeBE{
     public id?: number
 
     @Column({name: 'STATUT'})
-    @jf.string().required()
-    public statut: string
+    @jf.number().required()
+    public statut: number
 
     @Column({name: 'MONTANT'})
-    @jf.number().required()
+    @jf.any().required()
     public montant: number
 
     @Column({name: 'TO_PICK'})
@@ -42,7 +42,7 @@ export class CommandeBE{
         nullable: true
     })
     @JoinColumn({ name: 'PREPARATEUR_ID' })
-    @Relation(RelationEntity.ASSOCIATION, () => PreparateurBE)
+    @Relation(RelationEntity.ENTITY, () => PreparateurBE)
     public preparateur?: PreparateurBE
 }
 

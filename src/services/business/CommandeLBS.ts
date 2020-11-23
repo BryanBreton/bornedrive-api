@@ -11,7 +11,7 @@ export class CommandeLBS {
 
     }
 
-    public async findByCardNumber(cardNumber: number, idBorne: number): Promise<CommandeBE>{
+    public async findByCardNumber(cardNumber: bigint, idBorne: number): Promise<CommandeBE>{
         console.log(cardNumber + " " + idBorne);
         let borne = await this.borneDAO.findById(idBorne)
         !borne ? borne = new BorneBE() : borne = borne
@@ -19,14 +19,14 @@ export class CommandeLBS {
         return commandes
     }
 
-    public async findById(id: number, idBorne: number): Promise<CommandeBE>{
+    public async findById(id: bigint, idBorne: number): Promise<CommandeBE>{
         console.log(id);
-        const commande = await this.commandeDAO.findById(id)
+        const commande = await this.commandeDAO.findById(Number(id))
         if(commande) {
-            if(commande.statut === "Commandee") {
+            if(commande.statut === 1) {
                 commande.borne = await this.borneDAO.findById(idBorne)
                 commande.toPick = true
-                commande.statut = "En cours"
+                commande.statut = 2
                 this.commandeDAO.save(commande)  
                 // premiere
             } else {
@@ -42,8 +42,8 @@ export class CommandeLBS {
             const preparateur = await this.preparateurDAO.findById(idPreparateur)
             if(preparateur) {
                 commande.preparateur = preparateur
-                commande.toPick = false
-                commande.statut = "terminée"
+                // commande.toPick = false
+                commande.statut = 3
                 this.commandeDAO.save(commande)
             }
         }

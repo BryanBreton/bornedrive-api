@@ -14,6 +14,7 @@ export class CommandeEBS{
 
         const comm = await this.commandeLBS.findCommandesToPick()
         console.log(comm);
+        
         return comm
         
     }
@@ -26,22 +27,27 @@ export class CommandeEBS{
 
     @Get('/:numeroCarte/borne/:idBorne')
     @Resource(CommandeBE)
-    public async findByNumeroCarte(@PathParam('numeroCarte') numeroCarte: number, @PathParam('idBorne') idBorne : number): Promise<object> {
+    public async findByNumeroCarte(@PathParam('numeroCarte') numeroCarte: bigint, @PathParam('idBorne') idBorne : number): Promise<object> {
         console.log("oui");
         
         let retour
-        if(numeroCarte.toString().length === 9) { // on a une carte U 
+        console.log('taille : ' + numeroCarte.toString().length)
+        if(numeroCarte.toString().length === 14) { // on a une carte U 
             const commandes = await this.commandeLBS.findByCardNumber(numeroCarte, idBorne) // recupere la ou les commandes associées
             if(!commandes) { // pas de commande trouvée
-                retour = "Pas de commande, veuillez réessayer"
+                retour = {hasCommande: false}
             } else { // on a au moins une commande
-                if(commandes.statut === "En cours"){ // si la commande n'est pas finie
-                    retour = "Veuillez patientez votre commande n'est pas prête"
+                if(commandes.statut === 1){ // si la commande n'est pas finie
+                    console.log("iciiiiii");
+                    
+                    retour = {hasCommande: true, statut: "En Cours", client: commandes.client}
                 } else { // si elle est prete
                     if(commandes.preparateur){ // si elle est prise en charge par un preparateur
-                        retour = "Votre commande d'un montant de " + commandes.montant +" euros est prete, " + commandes.preparateur.prenom + " va vous servir"
+                        retour = {hasCommande: true, statut: "Prete", montant: commandes.montant, preparateur: commandes.preparateur, client: commandes.client} 
                     } else { // si elle n'est pas prise en charge
-                        retour = "Votre commande d'un montant de " + commandes.montant +" euros est prete, patientez le temps que l'on vous serve"
+                        console.log("laaaa");
+                        
+                        retour = {hasCommande: true, statut: "En Attente", montant: commandes.montant, client: commandes.client}
                     }
                     
                 }
@@ -51,20 +57,21 @@ export class CommandeEBS{
             if(commande.statut) { // commande existe
                 console.log(commande.statut);
                 
-                if(commande.statut === "En cours"){ // si la commande n'est pas finie
-                    retour = "Veuillez patientez votre commande n'est pas prête"
+                if(commande.statut === 1){ // si la commande n'est pas finie
+                    retour = {hasCommande: true, statut: "En Cours", client: commande.client}
+
                 } else { // si elle est prete
                     if(commande.preparateur) {
-                        retour = "Votre commande d'un montant de " + commande.montant +" euros est prete, " + commande.preparateur.prenom + " va vous servir"
+                        retour = {hasCommande: true, statut: "Prete", montant: commande.montant, preparateur: commande.preparateur, client: commande.client} 
                     } else {
-                        retour = "Votre commande d'un montant de " + commande.montant +" euros est prete, patientez le temps que l'on vous serve"
+                        retour = {hasCommande: true, statut: "En Attente", montant: commande.montant, client: commande.client}
                     }
                 }
             } else { // commande existe pas
-                retour = "Pas de commande, veuillez réessayer"
+                retour = {hasCommande: false}
             }
         }
-        return {message: retour}
+        return retour
     }
 
     

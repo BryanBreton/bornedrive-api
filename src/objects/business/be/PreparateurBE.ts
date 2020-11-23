@@ -15,6 +15,10 @@ export class PreparateurBE{
     @jf.string().required()
     public prenom: string
 
+    @Column({name: 'PHOTO'})
+    @jf.string().required()
+    public photo: string
+
     @OneToMany(type => CommandeBE, commande => commande.preparateur, {
         eager: false,
         cascade: true,

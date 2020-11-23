@@ -4,8 +4,12 @@ import { CommandeBE } from "./CommandeBE";
 
 @Entity('Client')
 export class ClientBE{
-    @PrimaryColumn({name: 'NUMERO_CARTE'})
+    @PrimaryColumn({name: 'NUMERO_CARTE', type: 'bigint'})
     public numeroCarte: number
+
+    @Column({name: 'CIVILITE'})
+    @jf.string().required()
+    public civilite: string
 
     @Column({name: 'NOM'})
     @jf.string().required()

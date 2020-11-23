@@ -12,13 +12,13 @@ export class CommandeDAO extends IrisDAO<CommandeBE, {id?: number, "client.numer
         super(magasinRepository, errorProvider, loggerProvider)
     }
 
-    public async findByClientId(cardNumber: number, borne: BorneBE): Promise<CommandeBE>{
+    public async findByClientId(cardNumber: bigint, borne: BorneBE): Promise<CommandeBE>{
         console.log(this.find());
         const commande = await this.findOne({"client.numeroCarte": cardNumber})
         if(commande) {
-            if(commande.statut === "Commandee") {
+            if(commande.statut === 1) {
                 commande.borne = borne
-                commande.statut = "En cours"
+                commande.statut = 2
                 commande.toPick = true
                 this.save(commande)              
             } else {
