@@ -14,9 +14,14 @@ export class CommandeEBS{
 
         const comm = await this.commandeLBS.findCommandesToPick()
         console.log(comm);
-        
         return comm
         
+    }
+
+    @Get('/:idCommande/finish')
+    @Resource(CommandeBE)
+    public async finishCommande(@PathParam('idCommande') idCommande: number){
+        this.commandeLBS.finishCommande(idCommande)
     }
 
     @Get('/:idCommande/preparateur/:idPreparateur')

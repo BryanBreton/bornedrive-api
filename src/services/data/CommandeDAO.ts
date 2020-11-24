@@ -33,7 +33,7 @@ export class CommandeDAO extends IrisDAO<CommandeBE, {id?: number, "client.numer
         const commandes = await this.find()
         let comm = commandes.filter(c => c.toPick === true)
         comm = comm.filter(c => c.borne)
-        comm.map(cmd => delete cmd.preparateur)
+        // comm.map(cmd => delete cmd.preparateur)
         return comm
     }
 }

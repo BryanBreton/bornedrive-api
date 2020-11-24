@@ -43,7 +43,10 @@ export class CommandeLBS {
             if(preparateur) {
                 commande.preparateur = preparateur
                 // commande.toPick = false
-                commande.statut = 3
+                console.log("essai 1");
+                if(commande.statut !== 4){
+                    commande.statut = 3
+                }
                 this.commandeDAO.save(commande)
             }
         }
@@ -55,5 +58,16 @@ export class CommandeLBS {
         console.log(comm);
         return comm
         
+    }
+
+    public async finishCommande(idCommande: number) {
+        const commande = await this.commandeDAO.findById(idCommande)
+        if(commande){
+            console.log("essai 2");
+            
+            commande.statut = 4
+            commande.toPick = false
+            this.commandeDAO.save(commande)
+        }
     }
 }
