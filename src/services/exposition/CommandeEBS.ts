@@ -47,13 +47,18 @@ export class CommandeEBS{
                     
                     retour = {hasCommande: true, statut: "En Cours", client: commandes.client}
                 } else { // si elle est prete
-                    if(commandes.preparateur){ // si elle est prise en charge par un preparateur
-                        retour = {hasCommande: true, statut: "Prete", montant: commandes.montant, preparateur: commandes.preparateur, client: commandes.client} 
-                    } else { // si elle n'est pas prise en charge
-                        console.log("laaaa");
-                        
-                        retour = {hasCommande: true, statut: "En Attente", montant: commandes.montant, client: commandes.client}
+                    if(commandes.statut === 4){ // finie
+                        retour = {hasCommande: true, statut: "Finie", montant: commandes.montant, preparateur: commandes.preparateur, client: commandes.client} 
+                    } else{ // pas encore finie
+                        if(commandes.preparateur){ // si elle est prise en charge par un preparateur
+                            retour = {hasCommande: true, statut: "Prete", montant: commandes.montant, preparateur: commandes.preparateur, client: commandes.client} 
+                        } else { // si elle n'est pas prise en charge
+                            console.log("laaaa");
+                            
+                            retour = {hasCommande: true, statut: "En Attente", montant: commandes.montant, client: commandes.client}
+                        }
                     }
+                    
                     
                 }
             }
@@ -66,11 +71,16 @@ export class CommandeEBS{
                     retour = {hasCommande: true, statut: "En Cours", client: commande.client}
 
                 } else { // si elle est prete
-                    if(commande.preparateur) {
-                        retour = {hasCommande: true, statut: "Prete", montant: commande.montant, preparateur: commande.preparateur, client: commande.client} 
+                    if(commande.statut === 4){
+                        retour = {hasCommande: true, statut: "Finie", montant: commande.montant, preparateur: commande.preparateur, client: commande.client} 
                     } else {
-                        retour = {hasCommande: true, statut: "En Attente", montant: commande.montant, client: commande.client}
+                        if(commande.preparateur) {
+                            retour = {hasCommande: true, statut: "Prete", montant: commande.montant, preparateur: commande.preparateur, client: commande.client} 
+                        } else {
+                            retour = {hasCommande: true, statut: "En Attente", montant: commande.montant, client: commande.client}
+                        }
                     }
+                    
                 }
             } else { // commande existe pas
                 retour = {hasCommande: false}
