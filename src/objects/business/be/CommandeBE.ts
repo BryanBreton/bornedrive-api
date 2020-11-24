@@ -21,6 +21,10 @@ export class CommandeBE{
     @jf.boolean().required()
     public toPick: boolean
 
+    @Column({name: 'CODECOURT'})
+    @jf.string().required()
+    public codeCourt: string
+
     @ManyToOne(type => ClientBE, client => client.commandes, {
         eager: false,
         nullable: false
